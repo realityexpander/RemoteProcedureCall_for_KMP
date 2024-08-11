@@ -5,8 +5,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class UserData(
-    val address: String,
     val lastName: String,
+    val address: String
 )
 
 interface NewsService : RPC {

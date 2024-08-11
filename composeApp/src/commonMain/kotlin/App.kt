@@ -1,11 +1,13 @@
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import io.ktor.client.*
 import io.ktor.client.plugins.timeout
 import io.ktor.http.*
@@ -58,7 +60,7 @@ fun App() {
 	var errorState by remember { mutableStateOf<String?>(null) }
 
 	var greeting by remember { mutableStateOf<String?>(null) }
-	val news = remember { mutableStateListOf<String>() }
+	val articles = remember { mutableStateListOf<String>() }
 	var topic by remember { mutableStateOf("Science") }
 
 	// Connect & Ping the RPC server
@@ -100,8 +102,7 @@ fun App() {
 	}
 
 	service?.also { serviceNotNull ->
-
-		// Simulate a server call with a simple return value.
+		// Create a server call with a simple return value.
 		LaunchedEffect(Unit) {
 			greeting = serviceNotNull.hello(
 				"${getPlatform().name} platform",
@@ -109,22 +110,22 @@ fun App() {
 			)
 		}
 
-		// Refresh the news stream.
+		// Refresh the article stream.
 		LaunchedEffect(Unit) {
 			shouldRefreshFeed = true
 		}
 
-		// Simulate a server-sent stream of news.
+		// Create a server-sent stream of articles.
 		LaunchedEffect(shouldRefreshFeed) {
 			streamScoped {
 				if(topic.isBlank()) {
 					serviceNotNull.subscribeToNews().collect { article ->
-						news.add(article)
+						articles.add(article)
 					}
 				} else {
-					news.clear()
+					articles.clear()
 					serviceNotNull.subscribeToTopic(topic).collect { article ->
-						news.add(article)
+						articles.add(article)
 					}
 				}
 			}
@@ -136,13 +137,15 @@ fun App() {
 		colors = MaterialTheme.colors.copy(
 			background = Color.Black,
 		),
-		typography = MaterialTheme.typography.copy(body1 = MaterialTheme.typography.body1.copy(color = Color.White))
+		typography = MaterialTheme.typography.copy(
+			body1 = MaterialTheme.typography.body1.copy(color = Color.White)
+		)
 	) {
-		var showIcon by remember { mutableStateOf(false) }
-
 		Column(
 			Modifier.fillMaxSize()
-				.background(Color.Black),
+				.background(Color.Black)
+				.verticalScroll(rememberScrollState())
+			,
 			horizontalAlignment = Alignment.Start
 		) {
 			// Display the greeting if there is one.
@@ -161,29 +164,34 @@ fun App() {
 				)
 			}
 
+			Row(
+				verticalAlignment = Alignment.CenterVertically
+			) {
+				// Text entry for a topic to subscribe to.
+				TextField(
+					value = topic,
+					onValueChange = { topic = it },
+					label = { Text("Topic") }
+				)
+				Spacer(modifier = Modifier.width(8.dp))
 
-			// Text entry for a topic to subscribe to.
-		   TextField(
-				value = topic,
-				onValueChange = { topic = it },
-				label = { Text("Topic") }
-			)
-
-			// Display & Load more news articles.
-			Button(onClick = {
-				shouldRefreshFeed = !shouldRefreshFeed
-			}) {
-				if(topic.isBlank()) {
-					Text("Get More News")
-				} else {
-					Text("Get More About $topic")
+				// Display & Load more news articles.
+				Button(onClick = {
+					shouldRefreshFeed = !shouldRefreshFeed
+				}) {
+					if (topic.isBlank()) {
+						Text("Get More News")
+					} else {
+						Text("Search for $topic")
+					}
 				}
 			}
 
 			Divider(modifier = Modifier.background(Color.Gray))
 
-			news.forEach {
-				Text("Article: $it")
+			// Display the articles.
+			articles.forEach { article ->
+				Text(article)
 			}
 		}
 	}

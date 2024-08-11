@@ -1,7 +1,6 @@
 
 package com.realityexpander.kotlinxrpc
 
-import UserData
 import NewsService
 import io.ktor.server.testing.*
 import kotlinx.coroutines.flow.toList

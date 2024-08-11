@@ -1,7 +1,6 @@
 
 package com.realityexpander.kotlinxrpc
 
-import UserData
 import NewsService
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -32,15 +31,15 @@ class NewsServiceImpl(override val coroutineContext: CoroutineContext) : NewsSer
         return flow {
             repeat(10) { count ->
 
-                // Find the count-th article with the topic in the title
+                // Find the n-th article with the topic in the title
                   val articles =
                       articleTitles.filter { it.contains(topic) }
                 if(articles.size <= count) {
-                    emit("No more articles on $topic")
+                    emit("No more articles on \"$topic\"")
                     return@flow
                 }
-                emit("${count+1}. " + articles[count])
-                delay(300)
+                emit("Article ${count+1}. " + articles[count])
+                delay(100)
             }
         }
     }
