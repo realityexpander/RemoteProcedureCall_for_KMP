@@ -1,7 +1,7 @@
 # About
 
 This is a Kotlin Multiplatform project targeting Android, iOS, Desktop & Ktor Server 
-demonstrating the new KotlinX Remote Procedure Call (kRPC) library. 
+demonstrating the new KotlinX Remote Procedure Call (kRPC) library. It makes RPC-based systems very easy to build.
 
 KotlinX RPC radically simplifies creating streaming and simplified, type-safe, secure, efficient communication between your front-end applications and the back-end server.
 
