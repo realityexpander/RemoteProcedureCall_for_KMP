@@ -8,6 +8,11 @@ demonstrating the new KotlinX Remote Procedure Call (kRPC) library.
 - How to send a request to the server and receive a response.
 - How to send a request to the server and receive a stream of responses.
 
+
+- Check out the KMP Developers Group on Twitter: https://twitter.com/i/communities/1739883885658607808
+- Here's my famous programming course ["How to Program From The Ground Up"](https://github.com/realityexpander/How_to_program_from_ground_up) on YouTube
+
+
 [<img src="screenshots/android.png" width=250>](screenshots/android.png)
 [<img src="screenshots/desktop.png" width=450>](screenshots/desktop.png)
 [<img src="screenshots/ios.png" width=350>](screenshots/ios.png)
