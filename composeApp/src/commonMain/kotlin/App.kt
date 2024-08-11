@@ -1,9 +1,7 @@
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,7 +25,7 @@ val client by lazy {
 	}
 }
 
-suspend fun setupRPC(): UserService = client.rpc {
+suspend fun setupRPC(): NewsService = client.rpc {
 	url {
 		host = DEV_SERVER_HOST
 		port = 8080
@@ -54,13 +52,14 @@ suspend fun setupRPC(): UserService = client.rpc {
 
 @Composable
 fun App() {
-	var service: UserService? by remember { mutableStateOf(null) }
-	var refresh by remember { mutableStateOf(false) }
+	var service: NewsService? by remember { mutableStateOf(null) }
+	var shouldRefreshFeed by remember { mutableStateOf(false) }
 	var connected by remember { mutableStateOf(false) }
 	var errorState by remember { mutableStateOf<String?>(null) }
 
 	var greeting by remember { mutableStateOf<String?>(null) }
 	val news = remember { mutableStateListOf<String>() }
+	var topic by remember { mutableStateOf("Science") }
 
 	// Connect & Ping the RPC server
 	LaunchedEffect(Unit) {
@@ -83,7 +82,7 @@ fun App() {
 			// Ping the RPC server every second.
 			service?.let {
 				errorState = null
-				try {m
+				try {
 					var count = 0
 					while (true) {
 						println(service?.ping())
@@ -112,19 +111,27 @@ fun App() {
 
 		// Refresh the news stream.
 		LaunchedEffect(Unit) {
-			refresh = true
+			shouldRefreshFeed = true
 		}
 
-		// Simulate a server-sent stream.
-		LaunchedEffect(refresh) {
+		// Simulate a server-sent stream of news.
+		LaunchedEffect(shouldRefreshFeed) {
 			streamScoped {
-				serviceNotNull.subscribeToNews().collect { article ->
-					news.add(article)
+				if(topic.isBlank()) {
+					serviceNotNull.subscribeToNews().collect { article ->
+						news.add(article)
+					}
+				} else {
+					news.clear()
+					serviceNotNull.subscribeToTopic(topic).collect { article ->
+						news.add(article)
+					}
 				}
 			}
 		}
 	}
 
+	// User Interface
 	MaterialTheme(
 		colors = MaterialTheme.colors.copy(
 			background = Color.Black,
@@ -154,12 +161,26 @@ fun App() {
 				)
 			}
 
+
+			// Text entry for a topic to subscribe to.
+		   TextField(
+				value = topic,
+				onValueChange = { topic = it },
+				label = { Text("Topic") }
+			)
+
 			// Display & Load more news articles.
 			Button(onClick = {
-				refresh = !refresh
+				shouldRefreshFeed = !shouldRefreshFeed
 			}) {
-				Text("Get More articles")
+				if(topic.isBlank()) {
+					Text("Get More News")
+				} else {
+					Text("Get More About $topic")
+				}
 			}
+
+			Divider(modifier = Modifier.background(Color.Gray))
 
 			news.forEach {
 				Text("Article: $it")

@@ -2,7 +2,7 @@
 package com.realityexpander.kotlinxrpc
 
 import UserData
-import UserService
+import NewsService
 import io.ktor.server.testing.*
 import kotlinx.coroutines.flow.toList
 import kotlinx.rpc.client.withService
@@ -25,7 +25,7 @@ class ApplicationTest {
                     json()
                 }
             }
-        }.withService<UserService>()
+        }.withService<NewsService>()
 
         assertEquals(
             expected = "Nice to meet you Alex, how is it in address1?",

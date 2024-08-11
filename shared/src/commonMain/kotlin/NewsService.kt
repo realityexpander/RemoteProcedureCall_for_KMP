@@ -9,10 +9,12 @@ data class UserData(
     val lastName: String,
 )
 
-interface UserService : RPC {
+interface NewsService : RPC {
     suspend fun hello(platform: String, userData: UserData): String
 
     suspend fun subscribeToNews(): Flow<String>
+
+    suspend fun subscribeToTopic(topic: String): Flow<String>
 
     suspend fun ping(): String
 //    suspend fun ping(count: Int): String  // test broken API

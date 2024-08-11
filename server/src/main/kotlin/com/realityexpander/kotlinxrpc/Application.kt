@@ -1,6 +1,6 @@
 package com.realityexpander.kotlinxrpc
 
-import UserService
+import NewsService
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.netty.*
@@ -27,7 +27,7 @@ fun Application.module() {
                 }
             }
 
-            registerService<UserService> { ctx -> UserServiceImpl(ctx) }
+            registerService<NewsService> { ctx -> NewsServiceImpl(ctx) }
         }
     }
 }

@@ -2,28 +2,45 @@
 package com.realityexpander.kotlinxrpc
 
 import UserData
-import UserService
+import NewsService
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlin.coroutines.CoroutineContext
 import kotlin.random.Random
 
-class UserServiceImpl(override val coroutineContext: CoroutineContext) : UserService {
+class NewsServiceImpl(override val coroutineContext: CoroutineContext) : NewsService {
 
     override suspend fun hello(platform: String, userData: UserData): String {
-        return "$platform: Nice to meet you ${userData.lastName}, " +
-                "how is it in ${userData.address}?"
+        return "$platform: Nice to see you ${userData.lastName}, " +
+                "from ${userData.address}. What would you like to search today?"
     }
 
     override suspend fun subscribeToNews(): Flow<String> {
         return flow {
             repeat(10) { count ->
-                delay(300)
                 emit(
                     "${count+1}. " +
                     articleTitles[Random.nextInt(articleTitles.size)]
                 )
+                delay(300)
+            }
+        }
+    }
+
+    override suspend fun subscribeToTopic(topic: String): Flow<String> {
+        return flow {
+            repeat(10) { count ->
+
+                // Find the count-th article with the topic in the title
+                  val articles =
+                      articleTitles.filter { it.contains(topic) }
+                if(articles.size <= count) {
+                    emit("No more articles on $topic")
+                    return@flow
+                }
+                emit("${count+1}. " + articles[count])
+                delay(300)
             }
         }
     }
