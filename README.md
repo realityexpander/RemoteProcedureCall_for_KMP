@@ -17,6 +17,18 @@ KotlinX RPC radically simplifies creating streaming and simplified, type-safe, s
 [<img src="screenshots/desktop.png" width=450>](screenshots/desktop.png)
 [<img src="screenshots/ios.png" width=350>](screenshots/ios.png)
 
+* Note: 
+  * Use Android Studio to run the iOS app on a simulator or a physical device.
+  * Use IntelliJ IDEA to run the Desktop app, Android app & server.
+  * Android Studio can run the Android app too.
+  * You can also run the iOS app on a physical device using Xcode.
+  * You can run the server on a cloud server or your local machine.
+  
+* IP Address
+  * For local running of the server, use your local IP address (from your system network settings).
+  * Don't use `127.0.0.1` or `localhost` as the server address, as emulators and simulators can't access it.
+  * Make sure to update the "Network Security Config" file in the Android app to allow network access to your server.
+
 * `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
   It contains several subfolders:
   - `commonMain` is for code that’s common for all targets.
