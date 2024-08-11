@@ -2,6 +2,7 @@
 package com.realityexpander.kotlinxrpc
 
 import NewsService
+import UserData
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -38,7 +39,7 @@ class NewsServiceImpl(override val coroutineContext: CoroutineContext) : NewsSer
                     emit("No more articles on \"$topic\"")
                     return@flow
                 }
-                emit("Article ${count+1}. " + articles[count])
+                emit("${count+1}. " + articles[count])
                 delay(100)
             }
         }
