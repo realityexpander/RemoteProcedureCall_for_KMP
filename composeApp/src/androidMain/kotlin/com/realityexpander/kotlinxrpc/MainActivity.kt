@@ -1,5 +1,5 @@
 
-package kotlinx.rpc.sample
+package com.realityexpander.kotlinxrpc
 
 import App
 import android.os.Bundle

@@ -19,7 +19,7 @@ import kotlinx.rpc.transport.ktor.client.installRPC
 import kotlinx.rpc.transport.ktor.client.rpc
 import kotlinx.rpc.transport.ktor.client.rpcConfig
 
-expect val DEV_SERVER_HOST: String
+const val DEV_SERVER_HOST: String = "192.168.1.69"
 
 val client by lazy {
 	HttpClient {
@@ -83,7 +83,7 @@ fun App() {
 			// Ping the RPC server every second.
 			service?.let {
 				errorState = null
-				try {
+				try {m
 					var count = 0
 					while (true) {
 						println(service?.ping())

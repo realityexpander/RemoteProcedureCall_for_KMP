@@ -1,4 +1,4 @@
-package kotlinx.rpc.sample
+package com.realityexpander.kotlinxrpc
 
 import UserService
 import io.ktor.http.*

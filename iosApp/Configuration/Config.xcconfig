@@ -1,3 +1,3 @@
 TEAM_ID=
-BUNDLE_ID=kotlinx.rpc.sample.KotlinX-RPC-app
+BUNDLE_ID=com.realityexpander.kotlinxrpc.KotlinX-RPC-app
 APP_NAME=KotlinX-RPC-app

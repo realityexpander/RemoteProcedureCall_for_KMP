@@ -59,7 +59,7 @@ kotlin {
 }
 
 android {
-    namespace = "kotlinx.rpc.sample"
+    namespace = "com.realityexpander.kotlinxrpc"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
@@ -67,7 +67,7 @@ android {
     sourceSets["main"].resources.srcDirs("src/commonMain/resources")
 
     defaultConfig {
-        applicationId = "kotlinx.rpc.sample"
+        applicationId = "com.realityexpander.kotlinxrpc"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
@@ -98,7 +98,7 @@ compose.desktop {
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "kotlinx.rpc.sample"
+            packageName = "com.realityexpander.kotlinxrpc"
             packageVersion = "1.0.0"
         }
     }

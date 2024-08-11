@@ -1,5 +1,5 @@
 
-package kotlinx.rpc.sample
+package com.realityexpander.kotlinxrpc
 
 import UserData
 import UserService
@@ -20,8 +20,9 @@ class UserServiceImpl(override val coroutineContext: CoroutineContext) : UserSer
         return flow {
             repeat(10) { count ->
                 delay(300)
-                emit("${count+1}. " +
-                        articleTitles[Random.nextInt(articleTitles.size)]
+                emit(
+                    "${count+1}. " +
+                    articleTitles[Random.nextInt(articleTitles.size)]
                 )
             }
         }

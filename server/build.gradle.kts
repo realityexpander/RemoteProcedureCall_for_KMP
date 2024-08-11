@@ -6,10 +6,10 @@ plugins {
     application
 }
 
-group = "kotlinx.rpc.sample"
+group = "com.realityexpander.kotlinxrpc"
 version = "1.0.0"
 application {
-    mainClass.set("kotlinx.rpc.sample.ApplicationKt")
+    mainClass.set("com.realityexpander.kotlinxrpc.ApplicationKt")
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=${extra["development"] ?: "false"}")
 }
 

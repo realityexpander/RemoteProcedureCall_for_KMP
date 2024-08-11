@@ -33,7 +33,7 @@ kotlin {
 }
 
 android {
-    namespace = "kotlinx.rpc.sample.shared"
+    namespace = "com.realityexpander.kotlinxrpc.shared"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()
