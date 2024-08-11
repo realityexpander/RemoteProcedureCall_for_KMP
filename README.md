@@ -27,7 +27,7 @@ KotlinX RPC radically simplifies creating streaming and simplified, type-safe, s
 * IP Address
   * For local running of the server, use your local IP address (from your system network settings).
   * Don't use `127.0.0.1` or `localhost` as the server address, as emulators and simulators can't access it.
-  * Make sure to update the "Network Security Config" file in the Android app to allow network access to your server.
+  * Make sure to update the "[network_security_config.xml](composeApp/src/androidMain/res/xml/network_security_config.xml)" file in the Android app to allow network access to your server.
 
 * `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
   It contains several subfolders:
