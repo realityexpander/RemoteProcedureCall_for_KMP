@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import io.ktor.client.*
+import io.ktor.client.plugins.timeout
 import io.ktor.http.*
 import kotlinx.coroutines.delay
 import kotlinx.rpc.client.withService
@@ -26,6 +27,31 @@ val client by lazy {
 	}
 }
 
+suspend fun setupRPC(): UserService = client.rpc {
+	url {
+		host = DEV_SERVER_HOST
+		port = 8080
+		encodedPath = "/api"
+	}
+
+	rpcConfig {
+		serialization {
+			json {
+				ignoreUnknownKeys = true
+				isLenient = true
+			}
+		}
+		timeout {
+			requestTimeoutMillis = 3000
+			socketTimeoutMillis = 3000
+			connectTimeoutMillis = 3000
+		}
+
+		waitForServices = true
+	}
+}.withService()
+
+
 @Composable
 fun App() {
 	var service: UserService? by remember { mutableStateOf(null) }
@@ -36,34 +62,39 @@ fun App() {
 	var greeting by remember { mutableStateOf<String?>(null) }
 	val news = remember { mutableStateListOf<String>() }
 
-	// Connect & Ping the server
+	// Connect & Ping the RPC server
 	LaunchedEffect(Unit) {
 		while (true) {
 
-			// Attempt to (re)connect to the server.
+			// Attempt to (re)connect to the RPC server.
 			while (!connected) {
-				delay(1000)
-
 				try {
 					service = setupRPC()
 					connected = true
-					errorState = null
 				} catch (e: Exception) {
 					errorState = e.message
 					connected = false
+					println(e.message)
 				}
+
+				delay(2000) // Wait 2 seconds before trying to reconnect.
 			}
 
-			// Ping the server every second.
+			// Ping the RPC server every second.
 			service?.let {
+				errorState = null
 				try {
+					var count = 0
 					while (true) {
 						println(service?.ping())
+//						println(service?.ping(count++)) // test broken API
+
 						delay(1000)
 					}
 				} catch (e: Exception) {
 					connected = false
 					errorState = e.message + ", trying to reconnect..."
+					println(e.message)
 				}
 			}
 		}
@@ -72,9 +103,9 @@ fun App() {
 	service?.also { serviceNotNull ->
 
 		// Simulate a server call with a simple return value.
-		LaunchedEffect(serviceNotNull) {
+		LaunchedEffect(Unit) {
 			greeting = serviceNotNull.hello(
-				"using ${getPlatform().name} platform",
+				"${getPlatform().name} platform",
 				UserData("Austin", "Athanas")
 			)
 		}
@@ -107,12 +138,14 @@ fun App() {
 				.background(Color.Black),
 			horizontalAlignment = Alignment.Start
 		) {
+			// Display the greeting if there is one.
 			greeting?.let {
 				Text(it)
 			} ?: run {
 				Text("Establishing server connection...")
 			}
 
+			// Display the error state if there is one.
 			errorState?.let {
 				Text(
 					"Error: $it",
@@ -121,6 +154,7 @@ fun App() {
 				)
 			}
 
+			// Display & Load more news articles.
 			Button(onClick = {
 				refresh = !refresh
 			}) {
@@ -133,18 +167,3 @@ fun App() {
 		}
 	}
 }
-
-suspend fun setupRPC(): UserService = client.rpc {
-	url {
-		host = DEV_SERVER_HOST
-		port = 8080
-		encodedPath = "/api"
-	}
-
-	rpcConfig {
-		serialization {
-			json()
-		}
-	}
-
-}.withService()

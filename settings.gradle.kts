@@ -1,5 +1,5 @@
 
-rootProject.name = "ktor-all-platforms-app"
+rootProject.name = "KotlinX-RPC-app"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {

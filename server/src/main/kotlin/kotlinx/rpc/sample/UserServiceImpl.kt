@@ -27,9 +27,11 @@ class UserServiceImpl(override val coroutineContext: CoroutineContext) : UserSer
         }
     }
 
+
     var count = 0
     override suspend fun ping() : String {
-        return "pong ${count++}"
+//    override suspend fun ping(count: Int) : String { // test broken API
+        return "pong ${count+1}"
     }
 
     // Simulate a database of articles

@@ -14,5 +14,6 @@ interface UserService : RPC {
 
     suspend fun subscribeToNews(): Flow<String>
 
-    suspend fun ping() : String
+    suspend fun ping(): String
+//    suspend fun ping(count: Int): String  // test broken API
 }
