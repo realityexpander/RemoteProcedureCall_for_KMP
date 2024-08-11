@@ -1,4 +1,3 @@
-
 package kotlinx.rpc.sample
 
 import UserService
@@ -18,6 +17,7 @@ fun Application.module() {
     install(RPC)
 
     installCORS()
+
 
     routing {
         rpc("/api") {
@@ -46,7 +46,8 @@ fun Application.installCORS() {
         allowSameOrigin = true
 
         // webpack-dev-server and local development
-        val allowedHosts = listOf("localhost:3000", "localhost:8080", "127.0.0.1:8080", "192.1.168.69:8080")
+        val allowedHosts =
+            listOf("localhost:3000", "localhost:8080", "127.0.0.1:8080", "192.1.168.69:8080")
         allowedHosts.forEach { host ->
             allowHost(host, listOf("http", "https", "ws", "wss"))
         }

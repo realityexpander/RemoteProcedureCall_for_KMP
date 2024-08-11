@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="ApplicationKt" type="JetRunConfigurationType" singleton="false" nameIsGenerated="true">
+    <option name="MAIN_CLASS_NAME" value="kotlinx.rpc.sample.ApplicationKt" />
+    <module name="ktor-all-platforms-app.server.main" />
+    <shortenClasspath name="NONE" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
