@@ -2,6 +2,7 @@
 package com.realityexpander.kotlinxrpc
 
 import NewsService
+import UserData
 import io.ktor.server.testing.*
 import kotlinx.coroutines.flow.toList
 import kotlinx.rpc.client.withService
