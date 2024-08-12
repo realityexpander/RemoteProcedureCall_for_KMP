@@ -14,7 +14,7 @@ KotlinX RPC radically simplifies creating streaming, type-safe, secure, efficien
 - How to send a request to the server and receive a stream of responses.
 
 - Explainer Video:
-- [<img src="https://github.com/user-attachments/assets/4fbfb756-14fe-4ddc-8657-46f9797424de" width=300>](https://youtu.be/X6Rw5OfPULw)
+  - [<img src="https://github.com/user-attachments/assets/4fbfb756-14fe-4ddc-8657-46f9797424de" width=300>](https://youtu.be/X6Rw5OfPULw)
 
 [<img src="screenshots/android.png" width=250>](screenshots/android.png)
 [<img src="screenshots/desktop.png" width=450>](screenshots/desktop.png)
