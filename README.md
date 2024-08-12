@@ -1,5 +1,8 @@
-# About
 
+
+# YOU DON'T HAVE TO USE REST FOR API's!!!
+
+### About
 This is a Kotlin Multiplatform project targeting Android, iOS, Desktop & Ktor Server 
 demonstrating the new KotlinX Remote Procedure Call (kRPC) library. It makes RPC-based systems very easy to build.
 
