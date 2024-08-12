@@ -34,10 +34,6 @@ suspend fun setupRPC(): NewsService = client.rpc {
 		encodedPath = "/api"
 	}
 
-	headers {
-		append(HttpHeaders.Authorization, "Basic YWRtaW46YWRtaW4=")
-	}
-
 	rpcConfig {
 		serialization {
 			json {

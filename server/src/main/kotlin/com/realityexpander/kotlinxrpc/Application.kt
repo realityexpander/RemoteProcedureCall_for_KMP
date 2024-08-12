@@ -1,13 +1,13 @@
 package com.realityexpander.kotlinxrpc
 
 import NewsService
-import io.ktor.http.*
-import io.ktor.server.application.*
-import io.ktor.server.netty.*
-import io.ktor.server.plugins.cors.routing.*
-import io.ktor.server.response.respond
-import io.ktor.server.routing.*
-import kotlinx.coroutines.launch
+import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpMethod
+import io.ktor.server.application.Application
+import io.ktor.server.application.install
+import io.ktor.server.netty.EngineMain
+import io.ktor.server.plugins.cors.routing.CORS
+import io.ktor.server.routing.routing
 import kotlinx.rpc.serialization.json
 import kotlinx.rpc.transport.ktor.server.RPC
 import kotlinx.rpc.transport.ktor.server.rpc
@@ -21,15 +21,6 @@ fun Application.module() {
 
     routing {
         rpc("/api") {
-
-            // Get the client authorization header.
-            val authHeader = call.request.headers[HttpHeaders.Authorization]
-            if(authHeader != "Basic YWRtaW46YWRtaW4=") {
-                launch {
-                    call.respond(HttpStatusCode.Unauthorized)
-                }
-                return@rpc
-            }
 
             rpcConfig {
                 serialization {
